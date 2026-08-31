@@ -17,5 +17,5 @@ await build({
   minify: false,
 });
 
-manifest.main = "https://cdn.jsdelivr.net/gh/fojazfugezigoipafeja/my-plugin@main/index.js";
+manifest.main = "index.js";
 writeFileSync("manifest.json", JSON.stringify(manifest, null, 2));
