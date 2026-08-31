@@ -1,4 +1,6 @@
+// @ts-ignore
 const { findByProps } = vendetta.metro;
+// @ts-ignore
 const { instead } = vendetta.patcher;
 const UserStore = findByProps("getCurrentUser");
 let unpatch;

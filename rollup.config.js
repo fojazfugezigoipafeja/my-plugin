@@ -6,9 +6,15 @@ export default defineConfig({
   output: {
     file: "index.js",
     format: "es",
+    inlineDynamicImports: true,
     compact: true,
   },
+  external: [/^@vendetta\/.*/],
   plugins: [
-    typescript(),
+    typescript({
+      compilerOptions: {
+        noEmitOnError: false,
+      },
+    }),
   ],
 });
