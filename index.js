@@ -1,4 +1,7 @@
-import {findByProps}from'@vendetta/metro';import {instead}from'@vendetta/patcher';let unpatch;
+import { findByProps } from '@vendetta/metro';
+import { instead } from '@vendetta/patcher';
+
+let unpatch;
 var index = {
     onLoad: () => {
         const UserStore = findByProps("getCurrentUser");
@@ -22,4 +25,6 @@ var index = {
         if (unpatch)
             unpatch();
     }
-};export{index as default};
+};
+
+export { index as default };

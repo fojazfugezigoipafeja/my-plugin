@@ -6,9 +6,9 @@ export default defineConfig({
   output: {
     file: "index.js",
     format: "es",
-    compact: true,
+    compact: false,
   },
-  external: [/^@vendetta\/.*/],
+  external: ["@vendetta/metro", "@vendetta/patcher"],
   plugins: [
     typescript({
       compilerOptions: {
