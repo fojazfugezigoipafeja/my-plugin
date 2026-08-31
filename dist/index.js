@@ -1,21 +1,24 @@
 var metro = require('@vendetta/metro');
 var patcher = require('@vendetta/patcher');
 
-mkdir - p;
-src && cat << 'EOF' > src / index.ts;
-const UserStore = metro.findByStore("UserStore");
-// Set your Target ID and new names here
-const TARGET_ID = "1536517857092051014";
-const FAKE_DISPLAY_NAME = "91";
-const FAKE_USERNAME = "91";
+const UserStore = metro.findByProps("getCurrentUser");
 let unpatch;
-var index$1 = {
+var index = {
     onLoad: () => {
-        unpatch = patcher.after("getCurrentUser", UserStore, (_, user) => {
-            if (user && user.id === TARGET_ID) {
-                user.globalName = FAKE_DISPLAY_NAME;
-                user.username = FAKE_USERNAME;
+        if (!UserStore)
+            return;
+        unpatch = patcher.instead("getCurrentUser", UserStore, (args, orig) => {
+            const user = orig(...args);
+            if (user) {
+                return new Proxy(user, {
+                    get(target, prop) {
+                        if (prop === "username" || prop === "globalName")
+                            return "Relapse";
+                        return target[prop];
+                    }
+                });
             }
+            return user;
         });
     },
     onUnload: () => {
@@ -23,8 +26,5 @@ var index$1 = {
             unpatch();
     }
 };
-EOF;
-pnpm;
-build;
 
-module.exports = index$1;
+module.exports = index;
