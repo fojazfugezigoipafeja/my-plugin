@@ -5,8 +5,13 @@ export default defineConfig({
   input: "src/index.ts",
   output: {
     file: "index.js",
-    format: "es",
-    compact: false,
+    format: "iife",
+    name: "plugin",
+    footer: "module.exports = plugin.default || plugin;",
+    globals: {
+      "@vendetta/metro": "vendetta.metro",
+      "@vendetta/patcher": "vendetta.patcher",
+    },
   },
   external: ["@vendetta/metro", "@vendetta/patcher"],
   plugins: [
