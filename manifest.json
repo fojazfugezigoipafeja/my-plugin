@@ -1,7 +1,9 @@
 {
+  "format": 1,
+  "id": "com.relapse.localnamechanger",
   "name": "LocalNameChanger",
   "description": "Changes username locally",
   "author": "Relapse",
-  "main": "index.js",
-  "version": "1.0.1"
+  "version": "1.0.2",
+  "main": "index.js"
 }
