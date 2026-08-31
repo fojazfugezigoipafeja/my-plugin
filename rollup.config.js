@@ -8,9 +8,6 @@ export default defineConfig({
     format: "es",
     compact: true,
   },
-  external: [
-    /^@vendetta\/.*/,
-  ],
   plugins: [
     typescript(),
   ],
