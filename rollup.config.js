@@ -1,11 +1,18 @@
+import commonjs from "@rollup/plugin-commonjs";
+import nodeResolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
+import { defineConfig } from "rollup";
 
-export default {
+export default defineConfig({
   input: "src/index.ts",
   output: {
     file: "dist/index.js",
-    format: "cjs",
-    strict: false
+    format: "iife",
+    compact: true,
   },
-  plugins: [typescript()]
-};
+  plugins: [
+    nodeResolve(),
+    commonjs(),
+    typescript({ tsconfig: "./tsconfig.json" }),
+  ],
+});
