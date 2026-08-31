@@ -1,4 +1,4 @@
-(function(metro,patcher){'use strict';let unpatch;
+var plugin=(function(metro,patcher){'use strict';let unpatch;
 var index = {
     onLoad: () => {
         const UserStore = metro.findByProps("getCurrentUser");
