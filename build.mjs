@@ -7,15 +7,8 @@ await build({
   entryPoints: ["src/index.ts"],
   bundle: true,
   outfile: "index.js",
-  format: "iife",
-  globalName: "plugin",
+  format: "cjs",
   target: "es2021",
-  banner: {
-    js: "(() => {",
-  },
-  footer: {
-    js: "return plugin.default || plugin;\n})();",
-  },
   external: ["@vendetta/metro", "@vendetta/patcher"],
   minify: false,
 });
