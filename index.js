@@ -1,10 +1,10 @@
-var plugin=(function(metro,patcher){'use strict';let unpatch;
+import {findByProps}from'@vendetta/metro';import {instead}from'@vendetta/patcher';let unpatch;
 var index = {
     onLoad: () => {
-        const UserStore = metro.findByProps("getCurrentUser");
+        const UserStore = findByProps("getCurrentUser");
         if (!UserStore)
             return;
-        unpatch = patcher.instead("getCurrentUser", UserStore, (args, orig) => {
+        unpatch = instead("getCurrentUser", UserStore, (args, orig) => {
             const user = orig(...args);
             if (user) {
                 return new Proxy(user, {
@@ -22,4 +22,4 @@ var index = {
         if (unpatch)
             unpatch();
     }
-};return index;})(vendetta.metro,vendetta.patcher);
+};export{index as default};
