@@ -51,4 +51,4 @@ var plugin = (() => {
   var index_default = plugin;
   return __toCommonJS(index_exports);
 })();
-plugin.default || plugin;
+module.exports = plugin.default || plugin;

@@ -11,7 +11,7 @@ await build({
   globalName: "plugin",
   target: "es2021",
   footer: {
-    js: "plugin.default || plugin;",
+    js: "module.exports = plugin.default || plugin;",
   },
   external: ["@vendetta/metro", "@vendetta/patcher"],
   minify: false,
