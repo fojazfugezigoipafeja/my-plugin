@@ -1,25 +1,25 @@
-'use strict';
-
-var metro = require('@vendetta/metro');
-var patcher = require('@vendetta/patcher');
-
+(function(metro,patcher){'use strict';const UserStore = metro.findByProps("getCurrentUser");
 let unpatch;
-const plugin = {
-  onLoad: () => {
-    const UserStore = metro.findByProps("getCurrentUser");
-    if (!UserStore) return;
-    unpatch = patcher.instead("getCurrentUser", UserStore, (args, orig) => {
-      const user = orig(...args);
-      if (!user) return user;
-      return Object.assign({}, user, {
-        username: "Relapse",
-        globalName: "Relapse"
-      });
-    });
-  },
-  onUnload: () => {
-    if (unpatch) unpatch();
-  }
-};
-
-module.exports = plugin;
+var index = {
+    onLoad: () => {
+        if (!UserStore)
+            return;
+        unpatch = patcher.instead("getCurrentUser", UserStore, (args, orig) => {
+            const user = orig(...args);
+            if (user) {
+                return new Proxy(user, {
+                    get(target, prop) {
+                        if (prop === "username" || prop === "globalName")
+                            return "Relapse";
+                        return target[prop];
+                    }
+                });
+            }
+            return user;
+        });
+    },
+    onUnload: () => {
+        if (unpatch)
+            unpatch();
+    }
+};return index;})(metro,patcher);
