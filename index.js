@@ -1,11 +1,7 @@
-// @ts-ignore
-const { findByProps } = vendetta.metro;
-// @ts-ignore
-const { instead } = vendetta.patcher;
-const UserStore = findByProps("getCurrentUser");
-let unpatch;
+import {findByProps}from'@vendetta/metro';import {instead}from'@vendetta/patcher';let unpatch;
 var index = {
     onLoad: () => {
+        const UserStore = findByProps("getCurrentUser");
         if (!UserStore)
             return;
         unpatch = instead("getCurrentUser", UserStore, (args, orig) => {
