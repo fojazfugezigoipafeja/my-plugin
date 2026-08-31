@@ -5,7 +5,11 @@ export default defineConfig({
   input: "src/index.ts",
   output: {
     file: "index.js",
-    format: "es",
+    format: "iife",
+    globals: {
+      "@vendetta/metro": "vendetta.metro",
+      "@vendetta/patcher": "vendetta.patcher",
+    },
     compact: true,
   },
   external: [/^@vendetta\/.*/],
