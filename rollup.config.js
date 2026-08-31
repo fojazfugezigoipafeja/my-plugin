@@ -9,7 +9,6 @@ export default defineConfig({
     file: "index.js",
     format: "iife",
     name: "plugin",
-    footer: "return plugin.default || plugin;",
     globals: {
       "@vendetta/metro": "vendetta.metro",
       "@vendetta/patcher": "vendetta.patcher",
@@ -19,15 +18,16 @@ export default defineConfig({
   plugins: [
     nodeResolve(),
     commonjs(),
-    {
-      name: "revenge-eval-wrap",
-      renderChunk(code) {
-        return `(() => {\n${code}\n})()`;
-      },
-    },
     esbuild({
       target: "es2021",
       minify: false,
     }),
+    {
+      name: "revenge-eval-fix",
+      renderChunk(code) {
+        // Return the plugin object directly from the eval string
+        return `(() => {\n${code}\nreturn plugin.default || plugin;\n})()`;
+      },
+    },
   ],
 });
