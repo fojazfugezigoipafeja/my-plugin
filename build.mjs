@@ -13,7 +13,6 @@ await build({
   footer: {
     js: "module.exports = plugin.default || plugin;",
   },
-  external: ["@vendetta/metro", "@vendetta/patcher"],
   minify: false,
 });
 

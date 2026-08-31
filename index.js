@@ -3,12 +3,6 @@ var plugin = (() => {
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-    get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-  }) : x)(function(x) {
-    if (typeof require !== "undefined") return require.apply(this, arguments);
-    throw Error('Dynamic require of "' + x + '" is not supported');
-  });
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
@@ -28,27 +22,30 @@ var plugin = (() => {
   __export(index_exports, {
     default: () => index_default
   });
-  var import_metro = __require("@vendetta/metro");
-  var import_patcher = __require("@vendetta/patcher");
+  var { metro, patcher } = window.vendetta;
+  var { findByProps } = metro;
+  var { instead } = patcher;
   var unpatch;
-  var plugin = {
+  var index_default = {
     onLoad: () => {
-      const UserStore = (0, import_metro.findByProps)("getCurrentUser");
+      const UserStore = findByProps("getCurrentUser");
       if (!UserStore) return;
-      unpatch = (0, import_patcher.instead)("getCurrentUser", UserStore, (args, orig) => {
+      unpatch = instead("getCurrentUser", UserStore, (args, orig) => {
         const user = orig(...args);
-        if (!user) return user;
-        return Object.assign({}, user, {
-          username: "Relapse",
-          globalName: "Relapse"
-        });
+        if (user) {
+          return {
+            ...user,
+            username: "Relapse",
+            globalName: "Relapse"
+          };
+        }
+        return user;
       });
     },
     onUnload: () => {
       if (unpatch) unpatch();
     }
   };
-  var index_default = plugin;
   return __toCommonJS(index_exports);
 })();
 module.exports = plugin.default || plugin;
