@@ -7,7 +7,7 @@ export default defineConfig({
     file: "index.js",
     format: "iife",
     name: "plugin",
-    footer: "window.plugin = plugin.default || plugin;",
+    footer: "return plugin.default || plugin;",
     globals: {
       "@vendetta/metro": "vendetta.metro",
       "@vendetta/patcher": "vendetta.patcher",
@@ -20,5 +20,12 @@ export default defineConfig({
         noEmitOnError: false,
       },
     }),
+    {
+      name: "swc-eval-wrapper",
+      renderChunk(code) {
+        // Wraps the IIFE in an immediate function execution so `return` is valid inside React Native eval
+        return `(() => {\n${code}\n})();`;
+      },
+    },
   ],
 });

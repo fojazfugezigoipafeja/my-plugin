@@ -1,3 +1,4 @@
+(() => {
 var plugin = (function (metro, patcher) {
     'use strict';
 
@@ -27,4 +28,5 @@ var plugin = (function (metro, patcher) {
     return plugin;
 
 })(vendetta.metro, vendetta.patcher);
-window.plugin = plugin.default || plugin;
+return plugin.default || plugin;
+})();
