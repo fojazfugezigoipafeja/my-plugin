@@ -7,8 +7,12 @@ await build({
   entryPoints: ["src/index.ts"],
   bundle: true,
   outfile: "index.js",
-  format: "cjs",
+  format: "iife",
+  globalName: "plugin",
   target: "es2021",
+  footer: {
+    js: "plugin.default || plugin;",
+  },
   external: ["@vendetta/metro", "@vendetta/patcher"],
   minify: false,
 });
