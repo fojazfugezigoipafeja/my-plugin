@@ -2,5 +2,6 @@
   "name": "LocalNameChanger",
   "description": "Changes username locally",
   "author": "Relapse",
-  "main": "index.js"
+  "main": "index.js",
+  "version": "1.0.1"
 }

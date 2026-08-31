@@ -2,7 +2,6 @@ import { defineConfig } from "rollup";
 import esbuild from "rollup-plugin-esbuild";
 import commonjs from "@rollup/plugin-commonjs";
 import nodeResolve from "@rollup/plugin-node-resolve";
-import swc from "@swc/core";
 
 export default defineConfig({
   input: "src/index.ts",
@@ -21,23 +20,14 @@ export default defineConfig({
     nodeResolve(),
     commonjs(),
     {
-      name: "swc",
-      async transform(code, id) {
-        const result = await swc.transform(code, {
-          filename: id,
-          jsc: {
-            parser: {
-              syntax: "typescript",
-              tsx: true,
-            },
-            target: "es5",
-          },
-        });
-        return { code: result.code, map: result.map };
+      name: "revenge-eval-wrap",
+      renderChunk(code) {
+        return `(() => {\n${code}\n})()`;
       },
     },
     esbuild({
-      minify: true,
+      target: "es2021",
+      minify: false,
     }),
   ],
 });
