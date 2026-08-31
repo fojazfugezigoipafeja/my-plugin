@@ -5,7 +5,9 @@
   "description": "Changes username locally",
   "author": "Relapse",
   "version": "1.0.2",
-  "main": "index.js",
+  "dist": {
+    "script": "index.js"
+  },
   "dependencies": {
     "revenge.api": {
       "version": ">=1"

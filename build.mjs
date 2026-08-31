@@ -16,5 +16,4 @@ await build({
   minify: false,
 });
 
-manifest.main = "index.js";
 writeFileSync("manifest.json", JSON.stringify(manifest, null, 2));
