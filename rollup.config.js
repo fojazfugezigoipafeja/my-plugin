@@ -1,5 +1,7 @@
-import typescript from "@rollup/plugin-typescript";
 import { defineConfig } from "rollup";
+import esbuild from "rollup-plugin-esbuild";
+import commonjs from "@rollup/plugin-commonjs";
+import nodeResolve from "@rollup/plugin-node-resolve";
 
 export default defineConfig({
   input: "src/index.ts",
@@ -7,7 +9,7 @@ export default defineConfig({
     file: "index.js",
     format: "iife",
     name: "plugin",
-    footer: "return plugin.default || plugin;",
+    footer: "module.exports = plugin.default || plugin;",
     globals: {
       "@vendetta/metro": "vendetta.metro",
       "@vendetta/patcher": "vendetta.patcher",
@@ -15,17 +17,11 @@ export default defineConfig({
   },
   external: ["@vendetta/metro", "@vendetta/patcher"],
   plugins: [
-    typescript({
-      compilerOptions: {
-        noEmitOnError: false,
-      },
+    nodeResolve(),
+    commonjs(),
+    esbuild({
+      target: "es2021",
+      minify: true,
     }),
-    {
-      name: "swc-eval-wrapper",
-      renderChunk(code) {
-        // Wraps the IIFE in an immediate function execution so `return` is valid inside React Native eval
-        return `(() => {\n${code}\n})();`;
-      },
-    },
   ],
 });
