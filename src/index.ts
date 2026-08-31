@@ -1,24 +1,22 @@
 import { findByProps } from "@vendetta/metro";
 import { instead } from "@vendetta/patcher";
 
-let unpatch: () => void;
+let unpatch: (() => void) | undefined;
 
-export default {
+const plugin = {
   onLoad: () => {
     const UserStore = findByProps("getCurrentUser");
     if (!UserStore) return;
 
     unpatch = instead("getCurrentUser", UserStore, (args, orig) => {
       const user = orig(...args);
-      if (user) {
-        return new Proxy(user, {
-          get(target, prop) {
-            if (prop === "username" || prop === "globalName") return "Relapse";
-            return target[prop];
-          }
-        });
-      }
-      return user;
+      if (!user) return user;
+      
+      // Return a safe object copy to prevent frozen object Proxy crashes
+      return Object.assign({}, user, {
+        username: "Relapse",
+        globalName: "Relapse",
+      });
     });
   },
   onUnload: () => {
@@ -26,3 +24,4 @@ export default {
   }
 };
 
+export default plugin;
