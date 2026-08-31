@@ -1,3 +1,4 @@
+(() => {
 var plugin = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -51,4 +52,5 @@ var plugin = (() => {
   var index_default = plugin;
   return __toCommonJS(index_exports);
 })();
-module.exports = plugin.default || plugin;
+return plugin.default || plugin;
+})();

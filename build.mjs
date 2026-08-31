@@ -10,8 +10,11 @@ await build({
   format: "iife",
   globalName: "plugin",
   target: "es2021",
+  banner: {
+    js: "(() => {",
+  },
   footer: {
-    js: "module.exports = plugin.default || plugin;",
+    js: "return plugin.default || plugin;\n})();",
   },
   external: ["@vendetta/metro", "@vendetta/patcher"],
   minify: false,
