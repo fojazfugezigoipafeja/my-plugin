@@ -1,7 +1,4 @@
-var metro = require('@vendetta/metro');
-var patcher = require('@vendetta/patcher');
-
-const UserStore = metro.findByProps("getCurrentUser");
+(function(metro,patcher){'use strict';const UserStore = metro.findByProps("getCurrentUser");
 let unpatch;
 var index = {
     onLoad: () => {
@@ -25,6 +22,4 @@ var index = {
         if (unpatch)
             unpatch();
     }
-};
-
-module.exports = index;
+};return index;})(metro,patcher);
