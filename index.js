@@ -26,5 +26,5 @@ var plugin = (function (metro, patcher) {
 
     return plugin;
 
-})(vendetta.metro, vendetta.patcher);
-module.exports = plugin.default || plugin;
+})(metro, patcher);
+return plugin.default || plugin;

@@ -7,11 +7,7 @@ export default defineConfig({
     file: "index.js",
     format: "iife",
     name: "plugin",
-    footer: "module.exports = plugin.default || plugin;",
-    globals: {
-      "@vendetta/metro": "vendetta.metro",
-      "@vendetta/patcher": "vendetta.patcher",
-    },
+    footer: "return plugin.default || plugin;",
   },
   external: ["@vendetta/metro", "@vendetta/patcher"],
   plugins: [
